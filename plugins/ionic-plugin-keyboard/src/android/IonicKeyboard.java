@@ -1,20 +1,15 @@
 package io.ionic.keyboard;
 
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.PluginResult;
-import org.apache.cordova.PluginResult.Status;
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
+import org.apache.cordova.*;
+import org.apache.cordova.PluginResult.Status;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 public class IonicKeyboard extends CordovaPlugin {
 
@@ -67,7 +62,7 @@ public class IonicKeyboard extends CordovaPlugin {
                             Rect r = new Rect();
                             //r will be populated with the coordinates of your view that area still visible.
                             rootView.getWindowVisibleDisplayFrame(r);
-                            
+
                             PluginResult result;
 
                             int heightDiff = rootView.getRootView().getHeight() - r.bottom;
@@ -89,8 +84,8 @@ public class IonicKeyboard extends CordovaPlugin {
                     };
 
                     rootView.getViewTreeObserver().addOnGlobalLayoutListener(list);
-                	
-                	
+
+
                     PluginResult dataResult = new PluginResult(PluginResult.Status.OK);
                     dataResult.setKeepCallback(true);
                     callbackContext.sendPluginResult(dataResult);

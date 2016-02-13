@@ -1,38 +1,32 @@
-/* 
- * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved. 
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); 
- * you may not use this file except in compliance with the License. 
- * You may obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software 
- * distributed under the License is distributed on an "AS IS" BASIS, 
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
- * See the License for the specific language governing permissions and 
- * limitations under the License. 
+/*
+ * Copyright 2014 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.amazon.cordova.plugin;
 
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
-import org.apache.cordova.CordovaActivity;
-import org.apache.cordova.LOG;
-import org.json.JSONArray;
-import org.json.JSONException;
-import com.amazon.device.messaging.ADM;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import com.amazon.device.messaging.ADM;
+import org.apache.cordova.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Iterator;
-
-import org.json.JSONObject;
 
 public class PushPlugin extends CordovaPlugin {
 
@@ -51,8 +45,8 @@ public class PushPlugin extends CordovaPlugin {
     private static String notificationHandlerCallBack;
     private static boolean isForeground = false;
     private static Bundle gCachedExtras = null;
-   
-    
+
+
     public static final String REGISTER = "register";
     public static final String UNREGISTER = "unregister";
     public static final String REGISTER_EVENT = "registered";
@@ -72,7 +66,7 @@ public class PushPlugin extends CordovaPlugin {
     private static final String ECB_NAME_NOT_SPECIFIED = "ecb(eventcallback) value is missing in options for register().";
     private static final String REGISTRATION_SUCCESS_RESPONSE = "Registration started...";
     private static final String UNREGISTRATION_SUCCESS_RESPONSE = "Unregistration started...";
-    
+
     private static final String MODEL_FIRST_GEN = "Kindle Fire";
 
     public enum ADMReadiness {
@@ -82,7 +76,7 @@ public class PushPlugin extends CordovaPlugin {
     /**
      * Sets the context of the Command. This can then be used to do things like get file paths associated with the
      * Activity.
-     * 
+     *
      * @param cordova
      *            The context of the main Activity.
      * @param webView
@@ -105,17 +99,17 @@ public class PushPlugin extends CordovaPlugin {
 
     /**
      * Checks if current device manufacturer is Amazon by using android.os.Build.MANUFACTURER property
-     * 
+     *
      * @return returns true for all Kindle Fire OS devices.
      */
     private boolean isAmazonDevice() {
         String deviceMaker = android.os.Build.MANUFACTURER;
         return deviceMaker.equalsIgnoreCase("Amazon");
     }
-    
-    /** 
+
+    /**
      * Check if device is First generation Kindle
-     * 
+     *
      * @return if device is First generation Kindle
      */
     private static boolean isFirstGenKindleFireDevice() {
@@ -125,7 +119,7 @@ public class PushPlugin extends CordovaPlugin {
      * Checks if ADM is available and supported - could be one of three 1. Non Amazon device, hence no ADM support 2.
      * ADM is not supported on this Kindle device (1st generation) 3. ADM is successfully initialized and ready to be
      * used
-     * 
+     *
      * @return returns true for all Kindle Fire OS devices.
      */
     public ADMReadiness isPushPluginReady() {
@@ -200,7 +194,7 @@ public class PushPlugin extends CordovaPlugin {
                 adm.startUnregister();
                 callbackContext.success(UNREGISTRATION_SUCCESS_RESPONSE);
                 return true;
-            } else {                
+            } else {
                 LOG.e(TAG, "Invalid action : " + request);
                 callbackContext.error("Invalid action : " + request);
                 return false;
@@ -214,7 +208,7 @@ public class PushPlugin extends CordovaPlugin {
 
     /**
      * Checks if any bundle extras were cached while app was not running
-     * 
+     *
      * @return returns tru if cached Bundle is not null otherwise true.
      */
     public boolean cachedExtrasAvailable() {
@@ -265,7 +259,7 @@ public class PushPlugin extends CordovaPlugin {
 
     /**
      * Indicates if app is in foreground or not.
-     * 
+     *
      * @return returns true if app is running otherwise false.
      */
     public static boolean isInForeground() {
@@ -274,7 +268,7 @@ public class PushPlugin extends CordovaPlugin {
 
     /**
      * Indicates if app is killed or not
-     * 
+     *
      * @return returns true if app is killed otherwise false.
      */
     public static boolean isActive() {
@@ -283,7 +277,7 @@ public class PushPlugin extends CordovaPlugin {
 
     /**
      * Delivers pending/offline messages if any
-     * 
+     *
      * @return returns true if there were any pending messages otherwise false.
      */
     public boolean deliverPendingMessageAndCancelNotifiation() {
@@ -299,12 +293,12 @@ public class PushPlugin extends CordovaPlugin {
         }
         // Clear the notification if any exists
         ADMMessageHandler.cancelNotification(activity);
-        
+
         return delivered;
     }
     /**
      * Sends register/unregiste events to JS
-     * 
+     *
      * @param String
      *            - eventName - "register", "unregister"
      * @param String
@@ -328,7 +322,7 @@ public class PushPlugin extends CordovaPlugin {
 
     /**
      * Sends events to JS using cordova nativeToJS bridge.
-     * 
+     *
      * @param JSONObject
      */
     public static boolean sendJavascript(JSONObject json) {
