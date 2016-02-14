@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('starter', ['ionic'])
+var app = angular.module('starter', ['ionic','ngCordova'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -78,7 +78,7 @@ window.errorHandler = function(error){
   alert('an error occured');
 };
 
-app.controller('MainCtrl',function($scope,RequestsService){
+app.controller('MainCtrl',function($scope,$cordovaCamera , RequestsService){
 
   $scope.registPush = function(){
     RequestsService.register(regIdStr).then(function(response){
@@ -96,11 +96,7 @@ app.controller('MainCtrl',function($scope,RequestsService){
     alert(regIdStr);
   }
 
-  $scope.sendEmail=function(){
-    alert("개발중");
-  }
-
-  $scope.sendEmail = function() {
+  $scope.sendEmailRegistId = function() {
 
       if (null != regIdStr) {
           window.plugin.email.open({
@@ -115,4 +111,131 @@ app.controller('MainCtrl',function($scope,RequestsService){
           this);
       }
     }
+
+
+  $scope.takePhoto = function () {
+    var options = {
+      quality: 75,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 300,
+      targetHeight: 300,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+  };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+      }, function (err) {
+          // An error occured. Show a message to the user
+      });
+  }
+
+  $scope.choosePhoto = function () {
+    var options = {
+      quality: 75,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 300,
+      targetHeight: 300,
+      popoverOptions: CameraPopoverOptions,
+      saveToPhotoAlbum: false
+    };
+
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+          $scope.imgURI = "data:image/jpeg;base64," + imageData;
+
+//          onImageSuccess(imageData);
+//
+//          function onImageSuccess(fileURI) {
+//              createFileEntry(fileURI);
+//          }
+//
+//          function createFileEntry(fileURI) {
+//              window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+//          }
+//
+//          // 5
+//          function copyFile(fileEntry) {
+//              var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+//              var newName = makeid() + name;
+//
+//              window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
+//                  fileEntry.copyTo(
+//                      fileSystem2,
+//                      newName,
+//                      onCopySuccess,
+//                      fail
+//                  );
+//              },
+//              fail);
+//          }
+//
+//          // 6
+//          function onCopySuccess(entry) {
+//              $scope.$apply(function () {
+//                  $scope.images.push(entry.nativeURL);
+//              });
+//          }
+//
+//          function fail(error) {
+//              console.log("fail: " + error.code);
+//          }
+//
+//          function makeid() {
+//              var text = "";
+//              var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//
+//              for (var i=0; i < 5; i++) {
+//                  text += possible.charAt(Math.floor(Math.random() * possible.length));
+//              }
+//              return text;
+//          }
+
+
+      }, function (err) {
+          // An error occured. Show a message to the user
+      });
+  }
+
+//  $scope.urlForImage = function(imageName) {
+//      var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+//      var trueOrigin = cordova.file.dataDirectory + name;
+//      return trueOrigin;
+//  }
+
+//  $scope.sendEmailImg = function() {
+//
+//    // 1
+//            var bodyText = "<h2>Look at this images!</h2>";
+//            if (null != $scope.images) {
+//                var images = [];
+//                var savedImages = $scope.images;
+//                for (var i = 0; i < savedImages.length; i++) {
+//                    // 2
+//                    images.push("" + $scope.urlForImage(savedImages[i]));
+//                    // 3
+//                    images[i] = images[i].replace('file://', '');
+//                }
+//
+//                // 4
+//                window.plugin.email.open({
+//                    to:          ["saimon@devdactic.com"], // email addresses for TO field
+//                    cc:          Array, // email addresses for CC field
+//                    bcc:         Array, // email addresses for BCC field
+//                    attachments: images, // file paths or base64 data streams
+//                    subject:    "Just some images", // subject of the email
+//                    body:       bodyText, // email body (for HTML, set isHtml to true)
+//                    isHtml:    true, // indicats if the body is HTML or plain text
+//                }, function () {
+//                    console.log('email view dismissed');
+//                },
+//                this);
+//            }
+//  }
+
 });

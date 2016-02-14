@@ -101,24 +101,18 @@ app.controller('MainCtrl',function($scope,RequestsService){
   }
 
   $scope.sendEmail = function() {
-            // 1
 
-            var bodyText = "<h2>Look at this images!</h2>";
-            if (null != regIdStr) {
-
-                // 4
-                window.plugin.email.open({
-                    to:          ["ksg412@gmail.com"], // email addresses for TO field
-                    cc:          Array, // email addresses for CC field
-                    bcc:         Array, // email addresses for BCC field
-                    attachments: images, // file paths or base64 data streams
-                    subject:    "Just some images", // subject of the email
-                    body:       bodyText, // email body (for HTML, set isHtml to true)
-                    isHtml:    true, // indicats if the body is HTML or plain text
-                }, function () {
-                    console.log('email view dismissed');
-                },
-                this);
-            }
+      if (null != regIdStr) {
+          window.plugin.email.open({
+              to:      null,
+              cc:      null,
+              bcc:     null,
+              subject: 'regId 전송',
+              body:    regIdStr
+          }, function () {
+              console.log('email view dismissed');
+          },
+          this);
+      }
     }
 });

@@ -11,6 +11,10 @@
                         {
                             "xml": "<feature name=\"Device\"><param name=\"browser-package\" value=\"Device\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Camera\"><param name=\"browser-package\" value=\"Camera\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -50,6 +54,9 @@
             "PACKAGE_NAME": "com.ionicframework.ionicgcm862620"
         },
         "de.appplant.cordova.plugin.email-composer": {
+            "PACKAGE_NAME": "com.ionicframework.ionicgcm862620"
+        },
+        "cordova-plugin-camera": {
             "PACKAGE_NAME": "com.ionicframework.ionicgcm862620"
         }
     },
@@ -121,6 +128,36 @@
             "id": "de.appplant.cordova.plugin.email-composer.EmailComposerProxy",
             "pluginId": "de.appplant.cordova.plugin.email-composer",
             "runs": true
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
+            "id": "cordova-plugin-camera.Camera",
+            "pluginId": "cordova-plugin-camera",
+            "clobbers": [
+                "Camera"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/www/CameraPopoverOptions.js",
+            "id": "cordova-plugin-camera.CameraPopoverOptions",
+            "pluginId": "cordova-plugin-camera",
+            "clobbers": [
+                "CameraPopoverOptions"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/www/Camera.js",
+            "id": "cordova-plugin-camera.camera",
+            "pluginId": "cordova-plugin-camera",
+            "clobbers": [
+                "navigator.camera"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-camera/src/browser/CameraProxy.js",
+            "id": "cordova-plugin-camera.CameraProxy",
+            "pluginId": "cordova-plugin-camera",
+            "runs": true
         }
     ],
     "plugin_metadata": {
@@ -131,6 +168,7 @@
         "cordova-plugin-statusbar": "2.1.1",
         "cordova-plugin-whitelist": "1.2.1",
         "ionic-plugin-keyboard": "1.0.8",
-        "de.appplant.cordova.plugin.email-composer": "0.8.3dev"
+        "de.appplant.cordova.plugin.email-composer": "0.8.3dev",
+        "cordova-plugin-camera": "2.1.0"
     }
 }
