@@ -23,14 +23,31 @@
 
     <script src="js/RequestsService.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/PushNotification.js"></script>
+
   </head>
-  <body ng-app="starter" class="platform-browser platform-cordova platform-webview">
+  <body ng-app="starter">
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
+        <h1 class="title">push test</h1>
       </ion-header-bar>
       <ion-content>
+        <div id="MainCtrl" ng-controller="MainCtrl">
+          <button ng-click="registPush()" class="button button-icon icon ion-checkmark-circled" style="width:100%;height:100px">
+            Regist push notifications
+          </button>
+          <br/>
+          <button ng-click="cancelPush()" class="button button-icon icon ion-close-circled" style="width:100%;height:100px">
+            cancel push notifications
+          </button>
+          <br/>
+          <button ng-click="shewRegIdStr()" class="button button-icon icon ion-help-circled" style="width:100%;height:100px">
+            show RegId
+          </button>
+          <button ng-click="sendEmail()" class="button button-icon icon ion-email" style="width:100%;height:100px">
+            send registId by e-mail
+          </button>
+        </div>
       </ion-content>
     </ion-pane>
   </body>

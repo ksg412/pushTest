@@ -3,11 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
-
+var app = angular.module('starter', ['ionic'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-  alert("시작");
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -23,7 +21,7 @@ angular.module('starter', ['ionic'])
     }
 
     pushNotification = window.plugins.pushNotification;
-    alert(pushNotification);
+
     pushNotification.register(
       onNotification,
       errorHandler,
@@ -32,52 +30,95 @@ angular.module('starter', ['ionic'])
         'sound': 'true',
         'alert': 'true',
         'ecb': 'onNotification',
-        'senderID': 'sapient-biplane-121814',
+        'senderID': '610546292889',
       }
     );
-
   });
-})
+});
 
-  window.onNotification = function(e){
+window.regIdStr="init";
 
-          switch(e.event){
-            case 'registered':
-              if(e.regid.length > 0){
-                alert(e.regid);
-                var device_token = e.regid;
-                RequestsService.register(device_token).then(function(response){
-                  alert('registered!');
-                });
-              }
-            break;
-
-            case 'message':
-              alert('msg received: ' + e.message);
-              /*
-                {
-                    "message": "Hello this is a push notification",
-                    "payload": {
-                        "message": "Hello this is a push notification",
-                        "sound": "notification",
-                        "title": "New Message",
-                        "from": "813xxxxxxx",
-                        "collapse_key": "do_not_collapse",
-                        "foreground": true,
-                        "event": "message"
-                    }
-                }
-              */
-            break;
-
-            case 'error':
-              alert('error occured');
-            break;
-
+window.onNotification = function(e){
+      switch(e.event){
+        case 'registered':
+          if(e.regid.length > 0){
+            regIdStr = e.regid;
+//            RequestsService.register(e.regid);
+//            .then(function(response){
+//              alert('registered!');
+//            });
           }
-    };
+        break;
 
+        case 'message':
+          alert('msg received: ' + e.message);
+          /*
+            {
+                "message": "Hello this is a push notification",
+                "payload": {
+                    "message": "Hello this is a push notification",
+                    "sound": "notification",
+                    "title": "New Message",
+                    "from": "813xxxxxxx",
+                    "collapse_key": "do_not_collapse",
+                    "foreground": true,
+                    "event": "message"
+                }
+            }
+          */
+        break;
+
+        case 'error':
+          alert('error occured');
+        break;
+      }
+};
 
 window.errorHandler = function(error){
   alert('an error occured');
-}
+};
+
+app.controller('MainCtrl',function($scope,RequestsService){
+
+  $scope.registPush = function(){
+    RequestsService.register(regIdStr).then(function(response){
+      alert('등록되었습니다.');
+    });
+  }
+
+  $scope.cancelPush = function(){
+    RequestsService.cancel(regIdStr).then(function(response){
+      alert('취소되었습니다.');
+    });
+  }
+
+  $scope.shewRegIdStr = function(){
+    alert(regIdStr);
+  }
+
+  $scope.sendEmail=function(){
+    alert("개발중");
+  }
+
+  $scope.sendEmail = function() {
+            // 1
+
+            var bodyText = "<h2>Look at this images!</h2>";
+            if (null != regIdStr) {
+
+                // 4
+                window.plugin.email.open({
+                    to:          ["ksg412@gmail.com"], // email addresses for TO field
+                    cc:          Array, // email addresses for CC field
+                    bcc:         Array, // email addresses for BCC field
+                    attachments: images, // file paths or base64 data streams
+                    subject:    "Just some images", // subject of the email
+                    body:       bodyText, // email body (for HTML, set isHtml to true)
+                    isHtml:    true, // indicats if the body is HTML or plain text
+                }, function () {
+                    console.log('email view dismissed');
+                },
+                this);
+            }
+    }
+});

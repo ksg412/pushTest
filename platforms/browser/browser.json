@@ -14,6 +14,16 @@
                         }
                     ]
                 }
+            },
+            "res/xml/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"EmailComposer\"><param name=\"browser-package\" value=\"de.appplant.cordova.emailcomposer.EmailComposer\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
             }
         }
     },
@@ -37,6 +47,9 @@
             "PACKAGE_NAME": "com.ionicframework.ionicgcm862620"
         },
         "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.ionicgcm862620"
+        },
+        "de.appplant.cordova.plugin.email-composer": {
             "PACKAGE_NAME": "com.ionicframework.ionicgcm862620"
         }
     },
@@ -93,6 +106,21 @@
             "merges": [
                 "window.StatusBar"
             ]
+        },
+        {
+            "file": "plugins/de.appplant.cordova.plugin.email-composer/www/email_composer.js",
+            "id": "de.appplant.cordova.plugin.email-composer.EmailComposer",
+            "pluginId": "de.appplant.cordova.plugin.email-composer",
+            "clobbers": [
+                "cordova.plugins.email",
+                "plugin.email"
+            ]
+        },
+        {
+            "file": "plugins/de.appplant.cordova.plugin.email-composer/src/browser/EmailComposerProxy.js",
+            "id": "de.appplant.cordova.plugin.email-composer.EmailComposerProxy",
+            "pluginId": "de.appplant.cordova.plugin.email-composer",
+            "runs": true
         }
     ],
     "plugin_metadata": {
@@ -102,6 +130,7 @@
         "cordova-plugin-splashscreen": "3.1.0",
         "cordova-plugin-statusbar": "2.1.1",
         "cordova-plugin-whitelist": "1.2.1",
-        "ionic-plugin-keyboard": "1.0.8"
+        "ionic-plugin-keyboard": "1.0.8",
+        "de.appplant.cordova.plugin.email-composer": "0.8.3dev"
     }
 }
